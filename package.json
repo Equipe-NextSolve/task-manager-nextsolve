@@ -19,5 +19,19 @@
     "@tailwindcss/postcss": "^4",
     "babel-plugin-react-compiler": "1.0.0",
     "tailwindcss": "^4"
-  }
+  },
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Equipe-NextSolve/task-manager-nextsolve.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Equipe-NextSolve/task-manager-nextsolve/issues"
+  },
+  "homepage": "https://github.com/Equipe-NextSolve/task-manager-nextsolve#readme"
 }
