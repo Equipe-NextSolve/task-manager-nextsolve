@@ -1,14 +1,19 @@
 "use client";
 
-import { useState } from "react";
 import {
-  signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { requireLoginOrRedirect } from "@/utils/require-login-or-redirect";
 import { auth } from "../../services/firebaseConfig";
 
 export default function LoginComponent() {
+  requireLoginOrRedirect();
+
+  const router = useRouter();
   const [mode, setMode] = useState("login");
   const [formData, setFormData] = useState({
     name: "",
@@ -37,8 +42,9 @@ export default function LoginComponent() {
     try {
       await signInWithEmailAndPassword(auth, formData.email, formData.password);
       setSuccess("Login realizado com sucesso!");
+      router.push("/dashboard");
     } catch (err) {
-      setError("Erro no login: " + err.message);
+      setError(`Erro no login: ${err.message}`);
     }
     setLoading(false);
   };
@@ -65,7 +71,8 @@ export default function LoginComponent() {
       setSuccess("Usuário cadastrado com sucesso!");
       setMode("login");
     } catch (err) {
-      setError("Erro no cadastro: " + err.message);
+      // console.log(err);
+      setError(`Erro no cadastro: ${err.message}`);
     }
     setLoading(false);
   };
@@ -77,7 +84,7 @@ export default function LoginComponent() {
       await sendPasswordResetEmail(auth, formData.email);
       setSuccess("Email de redefinição enviado!");
     } catch (err) {
-      setError("Erro ao enviar email: " + err.message);
+      setError(`Erro ao enviar email: ${err.message}`);
     }
     setLoading(false);
   };
@@ -199,6 +206,7 @@ export default function LoginComponent() {
           {mode === "login" && (
             <>
               <button
+                type="button"
                 onClick={() => setMode("forgot")}
                 className="text-app-details-cyan hover:underline"
               >
@@ -206,6 +214,7 @@ export default function LoginComponent() {
               </button>
               <br />
               <button
+                type="button"
                 onClick={() => setMode("register")}
                 className="text-app-details-cyan hover:underline"
               >
@@ -215,6 +224,7 @@ export default function LoginComponent() {
           )}
           {mode !== "login" && (
             <button
+              type="button"
               onClick={() => setMode("login")}
               className="text-app-details-cyan hover:underline"
             >
