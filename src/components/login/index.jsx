@@ -97,17 +97,14 @@ export default function LoginComponent() {
             trabalho.
           </p>
 
-          <div className="relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
-
-            <div className="relative bg-slate-900 rounded-2xl border border-slate-700 shadow-2xl overflow-hidden">
-              <img
-                src="/assets/img_login.png"
-                alt="Visualização do Sistema de Gestão"
-                className="w-full h-auto object-cover transform transition duration-500 hover:scale-105"
-              />
-            </div>
+          <div className="flex justify-center">
+            <img
+              src="/assets/imgLogin.png"
+              alt="Visualização do Sistema de Gestão"
+              className="w-full max-w-md h-auto transition-transform duration-300 hover:scale-105"
+            />
           </div>
+
         </div>
       </div>
 
@@ -123,7 +120,7 @@ export default function LoginComponent() {
             </h1>
             <p className="mt-2 text-slate-500">
               {mode === "login"
-                ? "Entre com suas credenciais de gestor."
+                ? "Entre com suas credenciais."
                 : "Preencha os dados para começar."}
             </p>
           </div>
@@ -153,7 +150,7 @@ export default function LoginComponent() {
               {mode === "register" && (
                 <div>
                   <label className="block text-sm font-medium mb-1 text-slate-300">
-                    Nome de usuário
+                    Nome completo
                   </label>
                   <input
                     type="text"
@@ -174,7 +171,7 @@ export default function LoginComponent() {
                 <input
                   type="email"
                   name="email"
-                  placeholder="nome@empresa.com"
+                  placeholder="nome@nextsolve.com"
                   value={formData.email}
                   onChange={handleChange}
                   required
@@ -241,7 +238,7 @@ export default function LoginComponent() {
                     Esqueceu sua senha?
                   </button>
                   <div className="h-px bg-slate-800 w-full my-2"></div>
-                  <p className="text-slate-500">
+                  <p className="text-slate-400">
                     Novo por aqui?{" "}
                     <button
                       onClick={() => setMode("register")}
