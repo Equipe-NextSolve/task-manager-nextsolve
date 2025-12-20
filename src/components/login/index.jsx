@@ -7,12 +7,9 @@ import {
 } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { requireLoginOrRedirect } from "@/utils/require-login-or-redirect";
 import { auth } from "../../services/firebaseConfig";
 
 export default function LoginComponent() {
-  requireLoginOrRedirect();
-
   const router = useRouter();
   const [mode, setMode] = useState("login");
   const [formData, setFormData] = useState({
@@ -57,7 +54,7 @@ export default function LoginComponent() {
     }
     if (!validatePassword(formData.password)) {
       setError(
-        "Senha deve ter pelo menos 8 caracteres, 1 maiúscula e 1 caracter especial",
+        "Senha deve ter pelo menos 8 caracteres, 1 maiúscula e 1 caracter especial"
       );
       return;
     }
@@ -66,12 +63,11 @@ export default function LoginComponent() {
       await createUserWithEmailAndPassword(
         auth,
         formData.email,
-        formData.password,
+        formData.password
       );
       setSuccess("Usuário cadastrado com sucesso!");
       setMode("login");
     } catch (err) {
-      // console.log(err);
       setError(`Erro no cadastro: ${err.message}`);
     }
     setLoading(false);
@@ -90,147 +86,181 @@ export default function LoginComponent() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-app-background text-app-secundary-white p-4">
-      <div className="bg-app-glass-transparent backdrop-blur-md rounded-lg p-8 w-full max-w-md shadow-lg">
-        <h1 className="text-3xl font-bold text-center mb-6 text-app-details-cyan">
-          {mode === "login"
-            ? "Login"
-            : mode === "register"
-              ? "Cadastrar"
-              : "Esqueceu Senha"}
-        </h1>
+    <div className="flex min-h-screen bg-slate-950 text-slate-100 font-sans">
+      <div className="hidden lg:flex lg:w-1/2 flex-col justify-center items-center p-12 bg-gradient-to-br from-slate-950 to-cyan-900/20 border-r border-slate-800">
+        <div className="max-w-xl text-center">
+          <h2 className="text-4xl font-bold mb-6 text-cyan-400 uppercase tracking-wider">
+            Sistema de Gestão de Atividaes
+          </h2>
+          <p className="text-lg text-slate-400 mb-10">
+            Acompanhe métricas, gerencie equipes e otimize seu fluxo de
+            trabalho.
+          </p>
 
-        {error && <p className="text-red-400 mb-4">{error}</p>}
-        {success && <p className="text-green-400 mb-4">{success}</p>}
+          <div className="relative group">
+            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
 
-        {mode === "login" && (
-          <form onSubmit={handleLogin} className="space-y-4">
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="w-full p-3 bg-app-primary-navyblue border border-app-details-cyan rounded focus:outline-none focus:ring-2 focus:ring-app-details-cyan"
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Senha"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              className="w-full p-3 bg-app-primary-navyblue border border-app-details-cyan rounded focus:outline-none focus:ring-2 focus:ring-app-details-cyan"
-            />
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full p-3 bg-app-details-cyan text-app-primary-navyblue font-bold rounded hover:bg-opacity-80 disabled:opacity-50"
+            <div className="relative bg-slate-900 rounded-2xl border border-slate-700 shadow-2xl overflow-hidden">
+              <img
+                src="/assets/img_login.png"
+                alt="Visualização do Sistema de Gestão"
+                className="w-full h-auto object-cover transform transition duration-500 hover:scale-105"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-slate-950">
+        <div className="w-full max-w-md space-y-8">
+          <div className="text-center lg:text-left">
+            <h1 className="text-4xl font-extrabold tracking-tight text-slate-100">
+              {mode === "login"
+                ? "Acessar Plataforma"
+                : mode === "register"
+                  ? "Criar Conta"
+                  : "Recuperar Senha"}
+            </h1>
+            <p className="mt-2 text-slate-500">
+              {mode === "login"
+                ? "Entre com suas credenciais de gestor."
+                : "Preencha os dados para começar."}
+            </p>
+          </div>
+
+          <div className="mt-8">
+            {error && (
+              <div className="p-3 mb-4 text-sm bg-red-900/20 border border-red-500/50 text-red-400 rounded-lg">
+                {error}
+              </div>
+            )}
+            {success && (
+              <div className="p-3 mb-4 text-sm bg-emerald-900/20 border border-emerald-500/50 text-emerald-400 rounded-lg">
+                {success}
+              </div>
+            )}
+
+            <form
+              onSubmit={
+                mode === "login"
+                  ? handleLogin
+                  : mode === "register"
+                    ? handleRegister
+                    : handleForgotPassword
+              }
+              className="space-y-5"
             >
-              {loading ? "Entrando..." : "Entrar"}
-            </button>
-          </form>
-        )}
+              {mode === "register" && (
+                <div>
+                  <label className="block text-sm font-medium mb-1 text-slate-300">
+                    Nome de usuário
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Seu nome"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className="w-full p-3 bg-slate-900 border border-slate-800 rounded-lg focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all placeholder:text-slate-600"
+                  />
+                </div>
+              )}
 
-        {mode === "register" && (
-          <form onSubmit={handleRegister} className="space-y-4">
-            <input
-              type="text"
-              name="name"
-              placeholder="Nome"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              className="w-full p-3 bg-app-primary-navyblue border border-app-details-cyan rounded focus:outline-none focus:ring-2 focus:ring-app-details-cyan"
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="w-full p-3 bg-app-primary-navyblue border border-app-details-cyan rounded focus:outline-none focus:ring-2 focus:ring-app-details-cyan"
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Senha"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              className="w-full p-3 bg-app-primary-navyblue border border-app-details-cyan rounded focus:outline-none focus:ring-2 focus:ring-app-details-cyan"
-            />
-            <input
-              type="password"
-              name="confirmPassword"
-              placeholder="Confirmar Senha"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-              className="w-full p-3 bg-app-primary-navyblue border border-app-details-cyan rounded focus:outline-none focus:ring-2 focus:ring-app-details-cyan"
-            />
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full p-3 bg-app-details-cyan text-app-primary-navyblue font-bold rounded hover:bg-opacity-80 disabled:opacity-50"
-            >
-              {loading ? "Cadastrando..." : "Cadastrar"}
-            </button>
-          </form>
-        )}
+              <div>
+                <label className="block text-sm font-medium mb-1 text-slate-300">
+                  E-mail
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="nome@empresa.com"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  className="w-full p-3 bg-slate-900 border border-slate-800 rounded-lg focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all placeholder:text-slate-600"
+                />
+              </div>
 
-        {mode === "forgot" && (
-          <form onSubmit={handleForgotPassword} className="space-y-4">
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="w-full p-3 bg-app-primary-navyblue border border-app-details-cyan rounded focus:outline-none focus:ring-2 focus:ring-app-details-cyan"
-            />
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full p-3 bg-app-details-cyan text-app-primary-navyblue font-bold rounded hover:bg-opacity-80 disabled:opacity-50"
-            >
-              {loading ? "Enviando..." : "Enviar Email"}
-            </button>
-          </form>
-        )}
+              {mode !== "forgot" && (
+                <div>
+                  <label className="block text-sm font-medium mb-1 text-slate-300">
+                    Senha
+                  </label>
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder="••••••••"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                    className="w-full p-3 bg-slate-900 border border-slate-800 rounded-lg focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all placeholder:text-slate-600"
+                  />
+                </div>
+              )}
 
-        <div className="mt-6 text-center space-y-2">
-          {mode === "login" && (
-            <>
+              {mode === "register" && (
+                <div>
+                  <label className="block text-sm font-medium mb-1 text-slate-300">
+                    Confirmar Senha
+                  </label>
+                  <input
+                    type="password"
+                    name="confirmPassword"
+                    placeholder="••••••••"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    required
+                    className="w-full p-3 bg-slate-900 border border-slate-800 rounded-lg focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all placeholder:text-slate-600"
+                  />
+                </div>
+              )}
+
               <button
-                type="button"
-                onClick={() => setMode("forgot")}
-                className="text-app-details-cyan hover:underline"
+                type="submit"
+                disabled={loading}
+                className="w-full py-3 px-4 bg-cyan-400 hover:bg-cyan-600 text-slate-950 font-bold rounded-lg transition-all duration-300 disabled:opacity-50 mt-4 shadow-lg shadow-cyan-500/10 active:scale-[0.98]"
               >
-                Esqueceu a senha?
+                {loading
+                  ? "Processando..."
+                  : mode === "login"
+                    ? "Entrar"
+                    : mode === "register"
+                      ? "Cadastrar"
+                      : "Enviar Email"}
               </button>
-              <br />
-              <button
-                type="button"
-                onClick={() => setMode("register")}
-                className="text-app-details-cyan hover:underline"
-              >
-                Não tem conta? Cadastrar
-              </button>
-            </>
-          )}
-          {mode !== "login" && (
-            <button
-              type="button"
-              onClick={() => setMode("login")}
-              className="text-app-details-cyan hover:underline"
-            >
-              Voltar ao Login
-            </button>
-          )}
+            </form>
+
+            <div className="mt-8 flex flex-col space-y-4 text-sm text-center">
+              {mode === "login" ? (
+                <>
+                  <button
+                    onClick={() => setMode("forgot")}
+                    className="text-cyan-400 hover:text-cyan-300 font-medium transition-colors"
+                  >
+                    Esqueceu sua senha?
+                  </button>
+                  <div className="h-px bg-slate-800 w-full my-2"></div>
+                  <p className="text-slate-500">
+                    Novo por aqui?{" "}
+                    <button
+                      onClick={() => setMode("register")}
+                      className="text-cyan-400 font-bold hover:underline"
+                    >
+                      Crie uma conta
+                    </button>
+                  </p>
+                </>
+              ) : (
+                <button
+                  onClick={() => setMode("login")}
+                  className="text-cyan-400 hover:text-cyan-300 font-medium transition-colors"
+                >
+                  Já possui conta? Fazer Login
+                </button>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>
