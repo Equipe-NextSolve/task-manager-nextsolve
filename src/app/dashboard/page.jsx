@@ -1,5 +1,11 @@
-import DashboardComponent from "@/components/dashboard";
+"use client";
 
-export default function Dashboard() {
-  return <DashboardComponent />;
+import { requireLoginOrRedirect } from "@/utils/require-login-or-redirect";
+import DashboardContent from "@/components/dashboard";
+
+export default function DashboardPage() {
+
+  requireLoginOrRedirect();
+
+  return <DashboardContent />;
 }
