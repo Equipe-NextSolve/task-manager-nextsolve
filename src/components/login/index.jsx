@@ -5,6 +5,7 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { auth } from "../../services/firebaseConfig";
@@ -54,7 +55,7 @@ export default function LoginComponent() {
     }
     if (!validatePassword(formData.password)) {
       setError(
-        "Senha deve ter pelo menos 8 caracteres, 1 maiúscula e 1 caracter especial"
+        "Senha deve ter pelo menos 8 caracteres, 1 maiúscula e 1 caracter especial",
       );
       return;
     }
@@ -63,7 +64,7 @@ export default function LoginComponent() {
       await createUserWithEmailAndPassword(
         auth,
         formData.email,
-        formData.password
+        formData.password,
       );
       setSuccess("Usuário cadastrado com sucesso!");
       setMode("login");
@@ -87,7 +88,7 @@ export default function LoginComponent() {
 
   return (
     <div className="flex min-h-screen bg-slate-950 text-slate-100 font-sans">
-      <div className="hidden lg:flex lg:w-1/2 flex-col justify-center items-center p-12 bg-gradient-to-br from-slate-950 to-cyan-900/20 border-r border-slate-800">
+      <div className="hidden lg:flex lg:w-1/2 flex-col justify-center items-center p-12 bg-linear-to-br from-slate-950 to-cyan-900/20 border-r border-slate-800">
         <div className="max-w-xl text-center">
           <h2 className="text-4xl font-bold mb-6 text-cyan-400 uppercase tracking-wider">
             Sistema de Gestão de Atividaes
@@ -98,13 +99,14 @@ export default function LoginComponent() {
           </p>
 
           <div className="flex justify-center">
-            <img
+            <Image
+              width={420}
+              height={447}
               src="/assets/imgLogin.png"
               alt="Visualização do Sistema de Gestão"
               className="w-full max-w-md h-auto transition-transform duration-300 hover:scale-105"
             />
           </div>
-
         </div>
       </div>
 
@@ -149,12 +151,16 @@ export default function LoginComponent() {
             >
               {mode === "register" && (
                 <div>
-                  <label className="block text-sm font-medium mb-1 text-slate-300">
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium mb-1 text-slate-300"
+                  >
                     Nome completo
                   </label>
                   <input
                     type="text"
                     name="name"
+                    id="name"
                     placeholder="Seu nome"
                     value={formData.name}
                     onChange={handleChange}
@@ -165,12 +171,16 @@ export default function LoginComponent() {
               )}
 
               <div>
-                <label className="block text-sm font-medium mb-1 text-slate-300">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium mb-1 text-slate-300"
+                >
                   E-mail
                 </label>
                 <input
                   type="email"
                   name="email"
+                  id="email"
                   placeholder="nome@nextsolve.com"
                   value={formData.email}
                   onChange={handleChange}
@@ -181,12 +191,16 @@ export default function LoginComponent() {
 
               {mode !== "forgot" && (
                 <div>
-                  <label className="block text-sm font-medium mb-1 text-slate-300">
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-medium mb-1 text-slate-300"
+                  >
                     Senha
                   </label>
                   <input
                     type="password"
                     name="password"
+                    id="password"
                     placeholder="••••••••"
                     value={formData.password}
                     onChange={handleChange}
@@ -198,12 +212,16 @@ export default function LoginComponent() {
 
               {mode === "register" && (
                 <div>
-                  <label className="block text-sm font-medium mb-1 text-slate-300">
+                  <label
+                    htmlFor="confirmPassword"
+                    className="block text-sm font-medium mb-1 text-slate-300"
+                  >
                     Confirmar Senha
                   </label>
                   <input
                     type="password"
                     name="confirmPassword"
+                    id="confirmPassword"
                     placeholder="••••••••"
                     value={formData.confirmPassword}
                     onChange={handleChange}
@@ -232,8 +250,9 @@ export default function LoginComponent() {
               {mode === "login" ? (
                 <>
                   <button
+                    type="button"
                     onClick={() => setMode("forgot")}
-                    className="text-cyan-400 hover:text-cyan-300 font-medium transition-colors"
+                    className="text-cyan-400 hover:text-cyan-300 font-medium transition-colors cursor-pointer"
                   >
                     Esqueceu sua senha?
                   </button>
@@ -241,20 +260,25 @@ export default function LoginComponent() {
                   <p className="text-slate-400">
                     Novo por aqui?{" "}
                     <button
+                      type="button"
                       onClick={() => setMode("register")}
-                      className="text-cyan-400 font-bold hover:underline"
+                      className="text-cyan-400 font-bold hover:underline cursor-pointer"
                     >
                       Crie uma conta
                     </button>
                   </p>
                 </>
               ) : (
-                <button
-                  onClick={() => setMode("login")}
-                  className="text-cyan-400 hover:text-cyan-300 font-medium transition-colors"
-                >
-                  Já possui conta? Fazer Login
-                </button>
+                <p className="text-slate-400">
+                  Já possui conta?{" "}
+                  <button
+                    type="button"
+                    onClick={() => setMode("login")}
+                    className="text-cyan-400 font-bold hover:underline cursor-pointer"
+                  >
+                    Fazer Login
+                  </button>
+                </p>
               )}
             </div>
           </div>
