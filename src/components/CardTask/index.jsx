@@ -7,7 +7,7 @@ export default function CardTask({
   status,
 }) {
   return (
-    <div className="flex flex-col gap-4 rounded-lg bg-app-background border-2 border-app-details-cyan hover:shadow-xl/10 shadow-app-details-cyan p-5">
+    <div className="flex flex-col gap-4 rounded-lg bg-app-background border-2 border-app-details-cyan hover:shadow-xl/10 transition shadow-app-details-cyan p-5">
       <div className="flex gap-2">
         <h3 className="text-lg font-bold text-app-secundary-white w-full">
           {titulo}

@@ -14,20 +14,23 @@ import {
   GitBranch,
   LayoutDashboard,
   LogOut,
+  PlusCircle,
   Rocket,
-  Settings,
   UserCircle,
 } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { auth } from "@/services/firebaseConfig";
 import { prioridadeTarefas } from "@/utils/prioridade-tarefas";
+import { requireLoginOrRedirect } from "@/utils/require-login-or-redirect";
 import { statusTasks } from "@/utils/status-tasks";
 import CardTask from "../CardTask";
 
 export default function DashboardContent() {
-  const router = useRouter();
+  requireLoginOrRedirect();
 
+  const router = useRouter();
   const [openProjetos, setOpenProjetos] = useState(true);
   const [openDev, setOpenDev] = useState(false);
 
@@ -176,15 +179,37 @@ export default function DashboardContent() {
               Status atual dos seus projetos e desenvolvimento.
             </p>
           </div>
-          <div className="bg-slate-900 border border-slate-800 p-2 px-4 rounded-full flex items-center gap-2 text-emerald-500">
-            <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-            <span className="text-xs font-bold uppercase tracking-widest">
-              Live System
-            </span>
+          <div className="flex gap-6">
+            <Link
+              href={"/admin/tasks/new"}
+              className="bg-app-details-cyan transition hover:bg-app-details-cyan/90 border border-app-details-cyan p-2 px-4 rounded-full flex items-center gap-2 text-app-primary-navyBlack"
+            >
+              <PlusCircle size={18} />
+              <span className="text-xs font-bold uppercase tracking-widest">
+                NOVA TAREFA
+              </span>
+            </Link>
+            <div className="bg-slate-900 border border-slate-800 p-2 px-4 rounded-full flex items-center gap-2 text-emerald-500">
+              <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+              <span className="text-xs font-bold uppercase tracking-widest">
+                Live System
+              </span>
+            </div>
           </div>
         </header>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* {tasks.map((task) => (
+            <CardTask
+              key={task.id}
+              titulo={task.titulo}
+              descricao={task.descricao}
+              prazo={new Date(task.prazo).toLocaleDateString()}
+              prioridade={prioridadeTarefas[task.prioridade]}
+              devResponsavel={task.devResponsavel}
+              status={statusTasks[task.status]}
+            />
+          ))} */}
           <CardTask
             titulo={"Criar componente para envio de imagem"}
             descricao={
