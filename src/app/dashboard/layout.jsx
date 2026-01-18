@@ -26,17 +26,20 @@ export default function DashboardLayout({ children }) {
 
   return (
     <div className="flex min-h-screen bg-slate-950 text-slate-100">
+      {/* SIDEBAR FIXO */}
       <aside className="fixed inset-y-0 left-0 w-64 bg-slate-900 border-r border-slate-800 flex flex-col z-30">
         <div className="p-6">
           <h2 className="text-cyan-400 font-bold text-xl tracking-tighter">NEXTSOLVE</h2>
         </div>
 
         <nav className="flex-1 px-4 space-y-1 mt-4 overflow-y-auto custom-scrollbar">
+          {/* Link Principal Dashboard */}
           <Link href="/dashboard" className="flex items-center gap-3 w-full p-3 text-slate-400 hover:bg-slate-800 rounded-lg transition-all group">
             <LayoutDashboard size={18} className="group-hover:text-cyan-400" />
             <span className="font-medium">Dashboard</span>
           </Link>
 
+          {/* Menu Projetos */}
           <div>
             <button 
               onClick={() => setOpenProjetos(!openProjetos)}
@@ -64,6 +67,7 @@ export default function DashboardLayout({ children }) {
             )}
           </div>
 
+          {/* Menu Dev */}
           <div className="mt-2">
             <button 
               onClick={() => setOpenDev(!openDev)}
@@ -84,6 +88,7 @@ export default function DashboardLayout({ children }) {
                 <Link href="/dashboard/dev/docs" className="flex items-center gap-2 w-full p-2 text-sm text-slate-500 hover:text-cyan-400 transition-colors">
                   <FileText size={14} /> Docs / API
                 </Link>
+                {/* NOVO LINK DE DEPLOY ADICIONADO AQUI */}
                 <Link href="/dashboard/dev/deploy" className="flex items-center gap-2 w-full p-2 text-sm text-slate-500 hover:text-orange-400 transition-colors">
                   <Rocket size={14} /> Deploy
                 </Link>
@@ -103,6 +108,7 @@ export default function DashboardLayout({ children }) {
           </Link>
         </nav>
 
+        {/* Botão de Logout */}
         <div className="p-4 border-t border-slate-800">
           <button 
             onClick={handleLogout} 
@@ -113,6 +119,7 @@ export default function DashboardLayout({ children }) {
         </div>
       </aside>
 
+      {/* ÁREA DE CONTEÚDO DINÂMICO */}
       <main className="flex-1 ml-64 p-8">
         {children}
       </main>

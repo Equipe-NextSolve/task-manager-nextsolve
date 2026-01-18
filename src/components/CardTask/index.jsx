@@ -7,41 +7,34 @@ export default function CardTask({
   status,
 }) {
   return (
-    <div className="flex flex-col gap-4 rounded-lg bg-app-background border-2 border-app-details-cyan hover:shadow-xl/10 transition shadow-app-details-cyan p-5">
+    <div className="flex flex-col gap-4 rounded-lg bg-slate-900 border-2 border-cyan-500/20 hover:border-cyan-500/50 hover:shadow-cyan-500/10 transition shadow-lg p-5">
       <div className="flex gap-2">
-        <h3 className="text-lg font-bold text-app-secundary-white w-full">
+        <h3 className="text-lg font-bold text-slate-100 w-full">
           {titulo}
         </h3>
+        {/* Adicionado Optional Chaining (?.) para evitar erros de undefined */}
         <div
-          className={`px-2 py-1 rounded-lg w-fit self-start ${prioridade.tagColor.bgAndBorderStyles}`}
+          className={`px-2 py-1 rounded-lg w-fit self-start ${prioridade?.tagColor?.bgAndBorderStyles || 'bg-slate-800'}`}
         >
-          <p className={`text-xs ${prioridade.tagColor.textStyles} font-bold`}>
-            {prioridade.tagName}
+          <p className={`text-xs ${prioridade?.tagColor?.textStyles || 'text-slate-400'} font-bold whitespace-nowrap`}>
+            {prioridade?.tagName || 'NORMAL'}
           </p>
         </div>
       </div>
 
-      <p className="text-gray-400 text-sm">{descricao}</p>
+      <p className="text-slate-400 text-sm line-clamp-2">{descricao}</p>
 
-      <div>
-        <p className="text-sm flex gap-1">
-          <span className="text-app-secundary-white">Prazo:</span>
-          <span className="text-gray-400">{prazo}</span>
+      <div className="space-y-1">
+        <p className="text-sm flex gap-2">
+          <span className="text-slate-100 font-medium">Prazo:</span>
+          <span className="text-slate-400">{prazo}</span>
         </p>
-      </div>
-
-      <div>
-        <p className="text-sm flex gap-1">
-          <span className="text-app-secundary-white">
-            Desenvolvedor respondsavel:
-          </span>
+        <p className="text-sm flex gap-2">
+          <span className="text-slate-100 font-medium">Desenvolvedor:</span>
           <span className="text-gray-400">{devResponsavel}</span>
         </p>
-      </div>
-
-      <div>
-        <p className="text-sm flex gap-1">
-          <span className="text-app-secundary-white">Status:</span>
+        <p className="text-sm flex gap-2">
+          <span className="text-slate-100 font-medium">Status:</span>
           <span className="text-gray-400">{status}</span>
         </p>
       </div>

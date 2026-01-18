@@ -1,111 +1,68 @@
 "use client";
-import { 
-  Rocket, 
-  CheckCircle2, 
-  RefreshCcw, 
-  ExternalLink, 
-  Clock, 
-  Server,
-  Activity
-} from "lucide-react";
+import { Rocket, CheckCircle2, Clock, Terminal, Activity, Globe } from "lucide-react";
 
 export default function DeployPage() {
-  const activeDeploys = [
-    {
-      id: 1,
-      env: "Produção",
-      status: "Sucesso",
-      version: "v2.4.0-stable",
-      updated: "Há 2 horas",
-      url: "nextsolve.com",
-    },
-    {
-      id: 2,
-      env: "Staging",
-      status: "Building",
-      version: "v2.5.0-rc.1",
-      updated: "Agora",
-      url: "staging.nextsolve.com",
-    }
+  const servers = [
+    { name: "Production", status: "Online", version: "v1.2.4", uptime: "12 dias" },
+    { name: "Staging", status: "Building", version: "v1.3.0-rc", uptime: "---" }
   ];
 
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold italic text-slate-200 flex items-center gap-3">
-          <Rocket className="text-cyan-400" /> Deploy & CI/CD
-        </h1>
-        <p className="text-slate-500">Monitore seus ambientes e pipelines de publicação.</p>
+        <h1 className="text-3xl font-bold text-slate-200">Ambientes de Deploy</h1>
+        <p className="text-slate-500">Gerencie suas instâncias e monitore builds em tempo real.</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {activeDeploys.map((deploy) => (
-          <div key={deploy.id} className="bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-slate-700 transition-all">
-            <div className="flex justify-between items-start mb-6">
-              <div>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-cyan-500 bg-cyan-500/10 px-2 py-1 rounded">
-                  {deploy.env}
-                </span>
-                <h3 className="text-xl font-bold mt-2 text-slate-100">{deploy.version}</h3>
+      {/* Grid de Servidores */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {servers.map((server) => (
+          <div key={server.name} className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
+            <div className="flex justify-between items-start mb-4">
+              <div className="p-3 bg-slate-950 rounded-xl border border-slate-800">
+                <Globe className={server.status === "Online" ? "text-emerald-400" : "text-amber-400"} size={24} />
               </div>
-              <div className={`flex items-center gap-2 text-sm font-medium ${
-                deploy.status === "Sucesso" ? "text-emerald-400" : "text-amber-400"
+              <span className={`text-xs font-bold px-2 py-1 rounded-full ${
+                server.status === "Online" ? "bg-emerald-500/10 text-emerald-500" : "bg-amber-500/10 text-amber-500"
               }`}>
-                {deploy.status === "Sucesso" ? (
-                  <CheckCircle2 size={16} />
-                ) : (
-                  <RefreshCcw size={16} className="animate-spin" />
-                )}
-                {deploy.status}
+                {server.status}
+              </span>
+            </div>
+            <h3 className="text-xl font-bold text-slate-100">{server.name}</h3>
+            <div className="mt-4 space-y-2">
+              <div className="flex justify-between text-sm">
+                <span className="text-slate-500">Versão:</span>
+                <span className="text-slate-300 font-mono">{server.version}</span>
+              </div>
+              <div className="flex justify-between text-sm">
+                <span className="text-slate-500">Uptime:</span>
+                <span className="text-slate-300">{server.uptime}</span>
               </div>
             </div>
-
-            <div className="space-y-3 mb-6">
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-slate-500">Domínio principal:</span>
-                <a href={`https://${deploy.url}`} target="_blank" className="text-slate-300 flex items-center gap-1 hover:text-cyan-400 transition-colors">
-                  {deploy.url} <ExternalLink size={12} />
-                </a>
-              </div>
-              <div className={`flex items-center justify-between text-sm`}>
-                <span className="text-slate-500">Último build:</span>
-                <span className="text-slate-300">{deploy.updated}</span>
-              </div>
-            </div>
-
-            <div className="flex gap-3">
-              <button className="flex-1 bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-bold py-2.5 rounded-lg transition">
-                Logs do Build
-              </button>
-              <button className="flex-1 border border-slate-700 hover:bg-slate-800 text-slate-300 text-sm font-bold py-2.5 rounded-lg transition">
-                Rollback
-              </button>
-            </div>
+            <button className="w-full mt-6 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-sm font-bold transition-all">
+              Ver Logs do Console
+            </button>
           </div>
         ))}
       </div>
 
-      <div className="bg-slate-900/50 border border-slate-800 rounded-2xl overflow-hidden">
-        <div className="p-4 border-b border-slate-800 bg-slate-900 flex items-center justify-between">
-          <h2 className="font-bold text-slate-200 flex items-center gap-2 text-sm">
-            <Activity size={16} className="text-slate-400" /> Atividade Recente da Pipeline
-          </h2>
-          <span className="text-[10px] text-slate-500 font-mono">ID: CI-99283</span>
+      {/* Histórico de Builds */}
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+        <div className="p-4 bg-slate-800/50 border-b border-slate-800 flex items-center gap-2">
+          <Terminal size={18} className="text-cyan-400" />
+          <h2 className="font-bold text-sm">Pipeline de Atividade</h2>
         </div>
         <div className="p-4 space-y-4">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="flex items-center justify-between text-xs border-b border-slate-800/50 pb-3 last:border-0 last:pb-0">
-              <div className="flex items-center gap-4">
-                <Server size={14} className="text-slate-600" />
-                <span className="text-slate-300 font-mono">commit-a7d2f{i}</span>
-                <span className="text-slate-500 hidden md:inline">Merged branch 'main' into production</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-slate-500">Há {i * 5} horas</span>
-                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
-              </div>
-            </div>
-          ))}
+          <div className="flex items-center gap-4 text-sm">
+            <CheckCircle2 size={16} className="text-emerald-500" />
+            <span className="text-slate-300 font-medium">Build concluído com sucesso</span>
+            <span className="text-slate-500 text-xs ml-auto">há 2 horas</span>
+          </div>
+          <div className="flex items-center gap-4 text-sm border-t border-slate-800 pt-4">
+            <Activity size={16} className="text-amber-500 animate-pulse" />
+            <span className="text-slate-300 font-medium">Otimizando assets da aplicação...</span>
+            <span className="text-slate-500 text-xs ml-auto">em andamento</span>
+          </div>
         </div>
       </div>
     </div>

@@ -14,8 +14,8 @@ export default function ProfilePage() {
             <UserCircle size={48} className="text-slate-500" />
           </div>
           <div>
-            <h2 className="text-2xl font-bold">{user?.displayName || "Desenvolvedor Fulls Stack"}</h2>
-            <p className="text-slate-500 text-sm">Nível: Desenvolvedor Jr</p>
+            <h2 className="text-2xl font-bold">{user?.displayName || "Desenvolvedor"}</h2>
+            <p className="text-slate-500 text-sm">Nível: Administrador</p>
           </div>
         </div>
         
