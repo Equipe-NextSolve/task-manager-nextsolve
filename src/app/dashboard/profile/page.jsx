@@ -1,6 +1,6 @@
 "use client";
+import { Calendar, Mail, UserCircle } from "lucide-react";
 import { auth } from "@/services/firebaseConfig";
-import { UserCircle, Mail, Calendar } from "lucide-react";
 
 export default function ProfilePage() {
   const user = auth.currentUser;
@@ -14,11 +14,13 @@ export default function ProfilePage() {
             <UserCircle size={48} className="text-slate-500" />
           </div>
           <div>
-            <h2 className="text-2xl font-bold">{user?.displayName || "Desenvolvedor"}</h2>
+            <h2 className="text-2xl font-bold">
+              {user?.displayName || "Desenvolvedor"}
+            </h2>
             <p className="text-slate-500 text-sm">Nível: Administrador</p>
           </div>
         </div>
-        
+
         <div className="grid gap-4">
           <div className="flex items-center gap-3 p-4 bg-slate-950 rounded-xl border border-slate-800">
             <Mail className="text-cyan-400" size={18} />

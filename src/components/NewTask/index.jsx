@@ -140,7 +140,9 @@ export default function NewTaskComponent() {
               className="w-full h-full p-3 bg-app-primary-navyblue border border-app-glass-transparent rounded-lg focus:outline-none focus:border-app-details-cyan focus:ring-1 focus:ring-app-details-cyan transition-all cursor-pointer"
             >
               {Object.entries(statusTasks).map(([key, value]) => (
-                <option key={key} value={key}>{value}</option>
+                <option key={key} value={key}>
+                  {value}
+                </option>
               ))}
             </select>
           </div>

@@ -1,6 +1,13 @@
 "use client"; //
 
-import { BarChart3, GitCommit, LayoutGrid, Users, TrendingUp, ArrowUpRight } from "lucide-react";
+import {
+  ArrowUpRight,
+  BarChart3,
+  GitCommit,
+  LayoutGrid,
+  TrendingUp,
+  Users,
+} from "lucide-react";
 import CardTask from "@/components/CardTask";
 
 export default function DashboardHome() {
@@ -9,53 +16,86 @@ export default function DashboardHome() {
     tagName: "ALTA",
     tagColor: {
       bgAndBorderStyles: "bg-red-500/10 border border-red-500/20",
-      textStyles: "text-red-500"
-    }
+      textStyles: "text-red-500",
+    },
   };
 
   const prioridadeMedia = {
     tagName: "MÉDIA",
     tagColor: {
       bgAndBorderStyles: "bg-orange-500/10 border border-orange-500/20",
-      textStyles: "text-orange-500"
-    }
+      textStyles: "text-orange-500",
+    },
   };
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500 p-6">
       <div className="flex justify-between items-end">
         <div>
-          <h1 className="text-3xl font-bold italic text-slate-200 tracking-tight">Visão Geral</h1>
-          <p className="text-slate-500">Bem-vindo de volta! Aqui está o resumo dos seus projetos.</p>
+          <h1 className="text-3xl font-bold italic text-slate-200 tracking-tight">
+            Visão Geral
+          </h1>
+          <p className="text-slate-500">
+            Bem-vindo de volta! Aqui está o resumo dos seus projetos.
+          </p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard title="Total de Projetos" value="12" trend="+2" icon={<LayoutGrid size={20}/>} color="text-cyan-400" />
-        <StatCard title="Commits (Mês)" value="248" trend="+18%" icon={<GitCommit size={20}/>} color="text-emerald-400" />
-        <StatCard title="Tempo Ativo" value="164h" trend="-4%" icon={<BarChart3 size={20}/>} color="text-purple-400" />
-        <StatCard title="Colaboradores" value="5" trend="0" icon={<Users size={20}/>} color="text-orange-400" />
+        <StatCard
+          title="Total de Projetos"
+          value="12"
+          trend="+2"
+          icon={<LayoutGrid size={20} />}
+          color="text-cyan-400"
+        />
+        <StatCard
+          title="Commits (Mês)"
+          value="248"
+          trend="+18%"
+          icon={<GitCommit size={20} />}
+          color="text-emerald-400"
+        />
+        <StatCard
+          title="Tempo Ativo"
+          value="164h"
+          trend="-4%"
+          icon={<BarChart3 size={20} />}
+          color="text-purple-400"
+        />
+        <StatCard
+          title="Colaboradores"
+          value="5"
+          trend="0"
+          icon={<Users size={20} />}
+          color="text-orange-400"
+        />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
           <div className="flex justify-between items-center mb-6">
             <h3 className="font-bold text-slate-300 flex items-center gap-2">
-              <TrendingUp size={18} className="text-cyan-400" /> Produtividade Semanal
+              <TrendingUp size={18} className="text-cyan-400" /> Produtividade
+              Semanal
             </h3>
           </div>
           <div className="h-48 flex items-end justify-between gap-2 px-2">
             {[40, 70, 45, 90, 65, 80, 50].map((height, i) => (
-              <div key={i} className="group relative w-full flex flex-col items-center">
-                <div 
-                  style={{ height: `${height}%` }} 
+              <div
+                // biome-ignore lint/suspicious/noArrayIndexKey: mocked data
+                key={i}
+                className="group relative w-full flex flex-col items-center"
+              >
+                <div
+                  style={{ height: `${height}%` }}
                   className="w-full bg-slate-800 group-hover:bg-cyan-500/50 rounded-t-md transition-all duration-300"
                 />
               </div>
             ))}
           </div>
         </div>
-        
+
         <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl flex flex-col">
           <h3 className="font-bold text-slate-300 mb-6">Tarefas por Status</h3>
           <div className="flex-1 flex items-center justify-around">
@@ -73,19 +113,21 @@ export default function DashboardHome() {
 
       <div>
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-bold text-slate-300">Projetos Prioritários</h2>
+          <h2 className="text-xl font-bold text-slate-300">
+            Projetos Prioritários
+          </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <CardTask 
-            titulo="Dashboard NextSolve" 
+          <CardTask
+            titulo="Dashboard NextSolve"
             descricao="Finalizar integração dos gráficos com dados reais do Firebase."
             prazo="20/01/2026"
             devResponsavel="Luiz"
             status="Em andamento"
             prioridade={prioridadeAlta}
           />
-          <CardTask 
-            titulo="Refatoração de API" 
+          <CardTask
+            titulo="Refatoração de API"
             descricao="Corrigir gargalo de performance no endpoint de autenticação."
             prazo="25/01/2026"
             devResponsavel="Equipe Backend"
@@ -104,7 +146,9 @@ function StatCard({ title, value, icon, color, trend }) {
       <div className="flex justify-between items-start mb-4">
         <span className={`p-2 bg-slate-950 rounded-lg ${color}`}>{icon}</span>
         {trend !== "0" && (
-          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${trend.startsWith('+') ? 'bg-emerald-500/10 text-emerald-500' : 'bg-red-500/10 text-red-500'}`}>
+          <span
+            className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${trend.startsWith("+") ? "bg-emerald-500/10 text-emerald-500" : "bg-red-500/10 text-red-500"}`}
+          >
             {trend}
           </span>
         )}

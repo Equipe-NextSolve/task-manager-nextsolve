@@ -1,24 +1,25 @@
 "use client";
-import CardTask from "@/components/CardTask";
 import { Clock } from "lucide-react";
+import CardTask from "@/components/CardTask";
 
 export default function ProjectsInProgress() {
   const tarefasAndamento = [
-    { 
-      id: 1, 
-      title: "Desenvolver componente de Tabela de Dados", 
-      description: "Tabela reutilizável com ordenação, paginação e filtro para ser usada em relatórios." 
+    {
+      id: 1,
+      title: "Desenvolver componente de Tabela de Dados",
+      description:
+        "Tabela reutilizável com ordenação, paginação e filtro para ser usada em relatórios.",
     },
-    { 
-      id: 2, 
-      title: "Desenvolver componente de Tabela de Dados", 
-      description: "Tabela reutilizável com ordenação, paginação e filtro para ser usada em relatórios." 
+    {
+      id: 2,
+      title: "Desenvolver componente de Tabela de Dados",
+      description:
+        "Tabela reutilizável com ordenação, paginação e filtro para ser usada em relatórios.",
     },
   ];
 
   return (
     <div className="min-h-screen ml-64 p-10 bg-[#020617] text-slate-100 flex flex-col items-start">
-      
       <header className="w-full max-w-5xl mb-12">
         <div className="flex items-center justify-between border-b border-slate-800 pb-6">
           <div className="flex items-center gap-3">
@@ -34,10 +35,10 @@ export default function ProjectsInProgress() {
               </p>
             </div>
           </div>
-          
+
           <div className="bg-slate-900 border border-slate-800 px-4 py-2 rounded-xl shadow-sm">
             <span className="text-cyan-400 font-mono font-bold text-lg">
-              {tarefasAndamento.length.toString().padStart(2, '0')}
+              {tarefasAndamento.length.toString().padStart(2, "0")}
             </span>
             <span className="text-slate-500 text-xs uppercase tracking-widest ml-2 font-semibold">
               Ativos
@@ -48,11 +49,14 @@ export default function ProjectsInProgress() {
 
       <div className="flex flex-wrap gap-8 justify-start w-full max-w-7xl">
         {tarefasAndamento.map((tarefa) => (
-          <div key={tarefa.id} className="w-80 shrink-0 transition-all duration-300 hover:-translate-y-2">
-            <CardTask 
-              status="andamento" 
+          <div
+            key={tarefa.id}
+            className="w-80 shrink-0 transition-all duration-300 hover:-translate-y-2"
+          >
+            <CardTask
+              status="andamento"
               title={tarefa.title}
-              description={tarefa.description} 
+              description={tarefa.description}
             />
           </div>
         ))}
