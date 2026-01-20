@@ -7,22 +7,22 @@ export default function CardTask({
   status,
 }) {
   return (
-    <div className="flex flex-col gap-4 rounded-lg bg-slate-900 border-2 border-cyan-500/20 hover:border-cyan-500/50 hover:shadow-cyan-500/10 transition shadow-lg p-5">
+    <div className="flex flex-col gap-4 rounded-lg bg-slate-900 border-2 border-cyan-500/20 hover:border-cyan-500/50 hover:shadow-cyan-500/10 transition shadow-lg p-5 min-w-90">
       <div className="flex gap-2">
-        <h3 className="text-lg font-bold text-slate-100 w-full">{titulo}</h3>
-        {/* Adicionado Optional Chaining (?.) para evitar erros de undefined */}
+        <h3 className="text-xl font-bold text-slate-100 w-full">{titulo}</h3>
+          {/* Adicionado Optional Chaining (?.) para evitar erros de undefined */}
         <div
-          className={`px-2 py-1 rounded-lg w-fit self-start ${prioridade?.tagColor?.bgAndBorderStyles || "bg-slate-800"}`}
+          className={`px-2 py-1 rounded-lg w-fit self-start ${prioridade?.tagColor?.bgAndBorderStyles}`}
         >
           <p
-            className={`text-xs ${prioridade?.tagColor?.textStyles || "text-slate-400"} font-bold whitespace-nowrap`}
+            className={`text-sm ${prioridade?.tagColor?.textStyles} font-bold whitespace-nowrap`}
           >
-            {prioridade?.tagName || "NORMAL"}
+            {prioridade?.tagName}
           </p>
         </div>
       </div>
 
-      <p className="text-slate-400 text-sm line-clamp-2">{descricao}</p>
+      <p className="text-slate-400 text-base line-clamp-2">{descricao}</p>
 
       <div className="space-y-1">
         <p className="text-sm flex gap-2">

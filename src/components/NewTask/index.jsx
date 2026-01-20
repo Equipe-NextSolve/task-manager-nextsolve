@@ -1,5 +1,6 @@
 "use client";
 
+import { addDoc, collection } from "firebase/firestore";
 import {
   Calendar,
   FileText,
@@ -9,10 +10,12 @@ import {
   User,
 } from "lucide-react";
 import { useState } from "react";
+import { db } from "@/services/firebaseConfig";
 import { prioridadeTarefas } from "@/utils/prioridade-tarefas";
 import { statusTasks } from "@/utils/status-tasks";
 
 export default function NewTaskComponent() {
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     titulo: "",
     descricao: "",
@@ -26,8 +29,29 @@ export default function NewTaskComponent() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  function handleSubmit() {
+  async function handleSubmit() {
+    setIsLoading(true);
     console.log("Formdata submitted:", formData);
+
+    try {
+      const docRef = await addDoc(collection(db, "tasks"), formData);
+      console.log("Created Task ID:", docRef.id);
+
+      alert("Tarefa criada com sucesso!");
+      setFormData({
+        titulo: "",
+        descricao: "",
+        prazo: "",
+        prioridade: prioridadeTarefas.baixa.tagName,
+        status: statusTasks.aFazer,
+        devResponsavel: "",
+      });
+    } catch (error) {
+      console.error("Erro ao criar tarefa: ", error);
+      alert("Erro ao criar tarefa. Tente novamente.");
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -172,11 +196,18 @@ export default function NewTaskComponent() {
           <div className="flex flex-col gap-4">
             <button
               type="button"
+              disabled={isLoading}
               onClick={handleSubmit}
-              className="flex items-center justify-center gap-2 w-full py-4 bg-app-details-cyan hover:bg-app-details-cyan/90 text-app-primary-navyblue font-bold rounded-lg transition-all shadow-lg shadow-cyan-400/10 active:scale-[0.98] cursor-pointer"
+              className="disabled:cursor-not-allowed flex items-center justify-center gap-2 w-full py-4 bg-app-details-cyan hover:bg-app-details-cyan/90 text-app-primary-navyblue font-bold rounded-lg transition-all shadow-lg shadow-cyan-400/10 active:scale-[0.98] cursor-pointer"
             >
-              <PlusCircle size={18} />
-              CRIAR TAREFA
+              {isLoading ? (
+                "CRIANDO TAREFA..."
+              ) : (
+                <>
+                  <PlusCircle size={18} />
+                  CRIAR TAREFA
+                </>
+              )}
             </button>
           </div>
         </form>

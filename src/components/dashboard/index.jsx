@@ -1,167 +1,108 @@
 "use client";
-import { signOut } from "firebase/auth";
-import {
-  AlertCircle,
-  Bell,
-  CheckCircle,
-  ChevronDown,
-  ChevronRight,
-  Clock,
-  Code2,
-  FileText,
-  FolderKanban,
-  GitBranch,
-  LayoutDashboard,
-  LogOut,
-  Rocket,
-  UserCircle,
-} from "lucide-react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { auth } from "@/services/firebaseConfig";
 
-export default function DashboardLayout({ children }) {
-  const router = useRouter();
-  const [openProjetos, setOpenProjetos] = useState(true);
-  const [openDev, setOpenDev] = useState(false);
+import { ResponsivePie } from "@nivo/pie";
+import { collection, getDocs } from "firebase/firestore";
+import { LayoutGrid, Users } from "lucide-react";
+import { useEffect } from "react";
+import { db } from "@/services/firebaseConfig";
+import GraficoPizzaTasks from "../GraficoPizzaTasks";
 
-  async function handleLogout() {
-    try {
-      await signOut(auth);
-      router.push("/");
-    } catch (err) {
-      console.log(err.message);
+export default function DashboardHomeComponent() {
+  useEffect(() => {
+    async function fetchTasks() {
+      try {
+        const tasksCollection = collection(db, "tasks");
+        const tasksSnapshot = await getDocs(tasksCollection);
+
+        const tasksList = tasksSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        console.log("Todas as tarefas:", tasksList);
+        console.log("Total de tarefas:", tasksList.length);
+
+        // Se quiser ver cada tarefa individualmente:
+        tasksList.forEach((task, index) => {
+          console.log(`Tarefa ${index + 1}:`, task);
+        });
+      } catch (error) {
+        console.error("Erro ao buscar tarefas:", error);
+      }
     }
-  }
+
+    fetchTasks();
+  }, []);
 
   return (
-    <div className="flex min-h-screen bg-slate-950 text-slate-100">
-      {/* SIDEBAR FIXO */}
-      <aside className="fixed inset-y-0 left-0 w-64 bg-slate-900 border-r border-slate-800 flex flex-col z-30">
-        <div className="p-6">
-          <h2 className="text-cyan-400 font-bold text-xl tracking-tighter">
-            NEXTSOLVE
-          </h2>
+    <div className="flex flex-col gap-8 animate-in fade-in duration-500">
+      <div className="flex justify-between items-end">
+        <div>
+          <h1 className="text-3xl font-bold italic text-slate-200 tracking-tight">
+            Visão Geral
+          </h1>
+          <p className="text-slate-500">
+            Bem-vindo de volta! Aqui está o resumo dos seus projetos.
+          </p>
         </div>
+      </div>
 
-        <nav className="flex-1 px-4 space-y-1 mt-4 overflow-y-auto custom-scrollbar">
-          <Link
-            href="/dashboard"
-            className="flex items-center gap-3 w-full p-3 text-slate-400 hover:bg-slate-800 rounded-lg transition-all group"
-          >
-            <LayoutDashboard size={18} className="group-hover:text-cyan-400" />
-            <span className="font-medium">Dashboard</span>
-          </Link>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+        <StatCard
+          title="Total de Projetos"
+          value="12"
+          icon={<LayoutGrid size={20} />}
+          color="text-cyan-400"
+        />
+        {/* <StatCard
+          title="Commits (Mês)"
+          value="248"
+          icon={<GitCommit size={20} />}
+          color="text-emerald-400"
+        />
+        <StatCard
+          title="Tempo Ativo"
+          value="164h"
+          icon={<BarChart3 size={20} />}
+          color="text-purple-400"
+        /> */}
+        <StatCard
+          title="Colaboradores"
+          value="5"
+          icon={<Users size={20} />}
+          color="text-orange-400"
+        />
+      </div>
 
-          {/* Projetos */}
-          <div>
-            <button
-              type="button"
-              onClick={() => setOpenProjetos(!openProjetos)}
-              className="flex items-center justify-between w-full p-3 text-slate-400 hover:bg-slate-800 rounded-lg transition-all"
-            >
-              <div className="flex items-center gap-3">
-                <FolderKanban size={18} />
-                <span className="font-medium">Projetos</span>
-              </div>
-              {openProjetos ? (
-                <ChevronDown size={16} />
-              ) : (
-                <ChevronRight size={16} />
-              )}
-            </button>
+      <div className="grid grid-cols-1 lg:grid-cols-1 gap-6">
 
-            {openProjetos && (
-              <div className="ml-9 mt-1 space-y-1">
-                <Link
-                  href="/dashboard/projects/router"
-                  className="flex items-center gap-2 w-full p-2 text-sm text-slate-500 hover:text-cyan-400 transition-colors"
-                >
-                  <Clock size={14} /> Em andamento
-                </Link>
-                <Link
-                  href="/dashboard/projects/completed"
-                  className="flex items-center gap-2 w-full p-2 text-sm text-slate-500 hover:text-emerald-400 transition-colors"
-                >
-                  <CheckCircle size={14} /> Concluídos
-                </Link>
-                <Link
-                  href="/dashboard/projects/late"
-                  className="flex items-center gap-2 w-full p-2 text-sm text-slate-500 hover:text-red-400 transition-colors"
-                >
-                  <AlertCircle size={14} /> Atrasados
-                </Link>
-              </div>
-            )}
-          </div>
+        <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl flex flex-col">
+          <h3 className="font-bold text-slate-300 mb-4">Tarefas por Status</h3>
 
-          {/* Dev */}
-          <div className="mt-2">
-            <button
-              type="button"
-              onClick={() => setOpenDev(!openDev)}
-              className="flex items-center justify-between w-full p-3 text-slate-400 hover:bg-slate-800 rounded-lg transition-all"
-            >
-              <div className="flex items-center gap-3">
-                <Code2 size={18} />
-                <span className="font-medium">Dev</span>
-              </div>
-              {openDev ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
-            </button>
-            {openDev && (
-              <div className="ml-9 mt-1 space-y-1">
-                <Link
-                  href="/dashboard/dev/repositories"
-                  className="flex items-center gap-2 w-full p-2 text-sm text-slate-500 hover:text-cyan-400 transition-colors"
-                >
-                  <GitBranch size={14} /> Repositórios
-                </Link>
-                <Link
-                  href="/dashboard/dev/docs"
-                  className="flex items-center gap-2 w-full p-2 text-sm text-slate-500 hover:text-cyan-400 transition-colors"
-                >
-                  <FileText size={14} /> Docs / API
-                </Link>
-                <Link
-                  href="/dashboard/dev/deploy"
-                  className="flex items-center gap-2 w-full p-2 text-sm text-slate-500 hover:text-cyan-400 transition-colors"
-                >
-                  <Rocket size={14} /> Deploy
-                </Link>
-              </div>
-            )}
-          </div>
-
-          <div className="h-px bg-slate-800 my-4"></div>
-
-          <Link
-            href="/dashboard/notifications"
-            className="flex items-center gap-3 w-full p-3 text-slate-400 hover:bg-slate-800 rounded-lg"
-          >
-            <Bell size={18} /> <span className="font-medium">Notificações</span>
-          </Link>
-          <Link
-            href="/dashboard/profile"
-            className="flex items-center gap-3 w-full p-3 text-slate-400 hover:bg-slate-800 rounded-lg"
-          >
-            <UserCircle size={18} /> <span className="font-medium">Perfil</span>
-          </Link>
-        </nav>
-
-        <div className="p-4 border-t border-slate-800">
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="flex items-center gap-3 w-full p-3 text-red-400 hover:bg-red-400/10 transition-all rounded-lg"
-          >
-            <LogOut size={18} /> <span className="font-medium">Sair</span>
-          </button>
+          <GraficoPizzaTasks />
         </div>
-      </aside>
-
-      {/* CONTEÚDO DINÂMICO */}
-      <main className="flex-1 ml-64 min-h-screen p-8">{children}</main>
+      </div>
     </div>
   );
 }
+
+function StatCard({ title, value, icon, color }) {
+  return (
+    <div className="bg-slate-900 border border-slate-800 p-5 rounded-2xl">
+      <div className="flex justify-between items-start mb-4">
+        <span className={`p-2 bg-slate-950 rounded-lg ${color}`}>{icon}</span>
+      </div>
+      <h3 className="text-slate-500 text-sm font-medium">{title}</h3>
+      <p className="text-2xl font-bold text-slate-100 mt-1">{value}</p>
+    </div>
+  );
+}
+
+// function LegendItem({ color, label }) {
+//   return (
+//     <div className="flex items-center gap-2">
+//       <div className={`w-3 h-3 rounded-sm ${color}`} />
+//       <span className="text-sm text-slate-400">{label}</span>
+//     </div>
+//   );
+// }
