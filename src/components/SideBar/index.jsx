@@ -123,7 +123,7 @@ export default function SideBar() {
               </Link>
               <Link
                 href="/dashboard/dev/docs"
-                className="flex items-center gap-2 w-full p-2 text-sm text-slate-500 hover:text-cyan-400 transition-colors"
+                className="flex items-center gap-2 w-full p-2 text-sm text-slate-500 hover:text-green-400 transition-colors"
               >
                 <FileText size={14} /> Docs / API
               </Link>
