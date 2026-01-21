@@ -30,28 +30,30 @@ export default function NewTaskComponent() {
   };
 
   async function handleSubmit() {
-    setIsLoading(true);
-    console.log("Formdata submitted:", formData);
+    alert("Funcionalidade de criação de tarefa em desenvolvimento.");
+    return;
+    // setIsLoading(true);
+    // console.log("Formdata submitted:", formData);
 
-    try {
-      const docRef = await addDoc(collection(db, "tasks"), formData);
-      console.log("Created Task ID:", docRef.id);
+    // try {
+    //   const docRef = await addDoc(collection(db, "tasks"), formData);
+    //   console.log("Created Task ID:", docRef.id);
 
-      alert("Tarefa criada com sucesso!");
-      setFormData({
-        titulo: "",
-        descricao: "",
-        prazo: "",
-        prioridade: prioridadeTarefas.baixa.tagName,
-        status: statusTasks.aFazer,
-        devResponsavel: "",
-      });
-    } catch (error) {
-      console.error("Erro ao criar tarefa: ", error);
-      alert("Erro ao criar tarefa. Tente novamente.");
-    } finally {
-      setIsLoading(false);
-    }
+    //   alert("Tarefa criada com sucesso!");
+    //   setFormData({
+    //     titulo: "",
+    //     descricao: "",
+    //     prazo: "",
+    //     prioridade: prioridadeTarefas.baixa.tagName,
+    //     status: statusTasks.aFazer,
+    //     devResponsavel: "",
+    //   });
+    // } catch (error) {
+    //   console.error("Erro ao criar tarefa: ", error);
+    //   alert("Erro ao criar tarefa. Tente novamente.");
+    // } finally {
+    //   setIsLoading(false);
+    // }
   }
 
   return (
