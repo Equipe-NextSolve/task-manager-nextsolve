@@ -1,39 +1,9 @@
 "use client";
 
-import { ResponsivePie } from "@nivo/pie";
-import { collection, getDocs } from "firebase/firestore";
 import { LayoutGrid, Users } from "lucide-react";
-import { useEffect } from "react";
-import { db } from "@/services/firebaseConfig";
 import GraficoPizzaTasks from "../GraficoPizzaTasks";
 
 export default function DashboardHomeComponent() {
-  useEffect(() => {
-    async function fetchTasks() {
-      try {
-        const tasksCollection = collection(db, "tasks");
-        const tasksSnapshot = await getDocs(tasksCollection);
-
-        const tasksList = tasksSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-
-        console.log("Todas as tarefas:", tasksList);
-        console.log("Total de tarefas:", tasksList.length);
-
-        // Se quiser ver cada tarefa individualmente:
-        tasksList.forEach((task, index) => {
-          console.log(`Tarefa ${index + 1}:`, task);
-        });
-      } catch (error) {
-        console.error("Erro ao buscar tarefas:", error);
-      }
-    }
-
-    fetchTasks();
-  }, []);
-
   return (
     <div className="flex flex-col gap-8 animate-in fade-in duration-500">
       <div className="flex justify-between items-end">
@@ -75,7 +45,6 @@ export default function DashboardHomeComponent() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-1 gap-6">
-
         <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl flex flex-col">
           <h3 className="font-bold text-slate-300 mb-4">Tarefas por Status</h3>
 

@@ -70,7 +70,7 @@ export default function NewTaskComponent() {
           <div className="flex flex-col gap-2">
             <label
               htmlFor="titulo"
-              className="flex items-center gap-2 text-sm font-bold text-app-glass-transparent tracking-tighter"
+              className="flex items-center gap-2 text-sm font-bold text-app-details-cyan tracking-tighter"
             >
               <FileText size={14} />
               Título
@@ -90,7 +90,7 @@ export default function NewTaskComponent() {
           <div className="flex flex-col gap-2">
             <label
               htmlFor="descricao"
-              className="flex items-center gap-2 text-sm font-bold text-app-glass-transparent tracking-tighter"
+              className="flex items-center gap-2 text-sm font-bold text-app-details-cyan tracking-tighter"
             >
               <FileText size={14} />
               Descrição
@@ -109,7 +109,7 @@ export default function NewTaskComponent() {
           <div className="flex flex-col gap-2">
             <label
               htmlFor="prazo"
-              className="flex items-center gap-2 text-sm font-bold text-app-glass-transparent tracking-tighter"
+              className="flex items-center gap-2 text-sm font-bold text-app-details-cyan tracking-tighter"
             >
               <Calendar size={14} />
               Prazo
@@ -128,7 +128,7 @@ export default function NewTaskComponent() {
           <div className="flex flex-col gap-2">
             <label
               htmlFor="prioridade"
-              className="flex items-center gap-2 text-sm font-bold text-app-glass-transparent tracking-tighter"
+              className="flex items-center gap-2 text-sm font-bold text-app-details-cyan tracking-tighter"
             >
               <Tag size={14} />
               Prioridade
@@ -151,7 +151,7 @@ export default function NewTaskComponent() {
           <div className="flex flex-col gap-2">
             <label
               htmlFor="status"
-              className="flex items-center gap-2 text-sm font-bold text-app-glass-transparent tracking-tighter"
+              className="flex items-center gap-2 text-sm font-bold text-app-details-cyan tracking-tighter"
             >
               <NotebookText size={14} />
               Status
@@ -174,7 +174,7 @@ export default function NewTaskComponent() {
           <div className="flex flex-col gap-2">
             <label
               htmlFor="devResponsavel"
-              className="flex items-center gap-2 text-sm font-bold text-app-glass-transparent tracking-tighter"
+              className="flex items-center gap-2 text-sm font-bold text-app-details-cyan tracking-tighter"
             >
               <User size={14} />
               Responsável
