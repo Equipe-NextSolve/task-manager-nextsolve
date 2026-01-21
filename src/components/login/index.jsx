@@ -9,6 +9,8 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { auth } from "../../services/firebaseConfig";
+// Importação dos ícones de olho
+import { Eye, EyeOff } from "lucide-react";
 
 export default function LoginComponent() {
   const router = useRouter();
@@ -22,6 +24,7 @@ export default function LoginComponent() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // Estado para o olho
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -91,7 +94,7 @@ export default function LoginComponent() {
       <div className="hidden lg:flex lg:w-1/2 flex-col justify-center items-center p-12 bg-linear-to-br from-slate-950 to-cyan-900/20 border-r border-slate-800">
         <div className="max-w-xl text-center">
           <h2 className="text-4xl font-bold mb-6 text-cyan-400 uppercase tracking-wider">
-            Sistema de Gestão de Atividaes
+            Sistema de Gestão de Atividades
           </h2>
           <p className="text-lg text-slate-400 mb-10">
             Acompanhe métricas, gerencie equipes e otimize seu fluxo de
@@ -189,6 +192,7 @@ export default function LoginComponent() {
                 />
               </div>
 
+              {/* Campo de Senha Ajustado com Olho */}
               {mode !== "forgot" && (
                 <div>
                   <label
@@ -197,19 +201,34 @@ export default function LoginComponent() {
                   >
                     Senha
                   </label>
-                  <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    placeholder="••••••••"
-                    value={formData.password}
-                    onChange={handleChange}
-                    required
-                    className="w-full p-3 bg-slate-900 border border-slate-800 rounded-lg focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all placeholder:text-slate-600"
-                  />
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      id="password"
+                      placeholder="••••••••"
+                      value={formData.password}
+                      onChange={handleChange}
+                      required
+                      className="w-full p-3 bg-slate-900 border border-slate-800 rounded-lg focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all placeholder:text-slate-600 pr-12"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-cyan-400 transition-colors p-1 focus:outline-none"
+                      aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+                    >
+                      {showPassword ? (
+                        <EyeOff size={20} strokeWidth={2} />
+                      ) : (
+                        <Eye size={20} strokeWidth={2} />
+                      )}
+                    </button>
+                  </div>
                 </div>
               )}
 
+              {/* Campo de Confirmar Senha Ajustado com Olho */}
               {mode === "register" && (
                 <div>
                   <label
@@ -218,16 +237,18 @@ export default function LoginComponent() {
                   >
                     Confirmar Senha
                   </label>
-                  <input
-                    type="password"
-                    name="confirmPassword"
-                    id="confirmPassword"
-                    placeholder="••••••••"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
-                    required
-                    className="w-full p-3 bg-slate-900 border border-slate-800 rounded-lg focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all placeholder:text-slate-600"
-                  />
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      name="confirmPassword"
+                      id="confirmPassword"
+                      placeholder="••••••••"
+                      value={formData.confirmPassword}
+                      onChange={handleChange}
+                      required
+                      className="w-full p-3 bg-slate-900 border border-slate-800 rounded-lg focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all placeholder:text-slate-600 pr-12"
+                    />
+                  </div>
                 </div>
               )}
 
