@@ -5,19 +5,19 @@ export default function GraficoPizzaTasks() {
     {
       id: "Concluídos",
       label: "Concluídos",
-      value: 3,
+      value: 1,
       color: "#00D492",
     },
     {
       id: "Atrasados",
       label: "Atrasados",
-      value: 2,
+      value: 1,
       color: "#FF6467",
     },
     {
       id: "Em andamento",
       label: "Em andamento",
-      value: 1,
+      value: 2,
       color: "#00D3F2",
     },
   ];
