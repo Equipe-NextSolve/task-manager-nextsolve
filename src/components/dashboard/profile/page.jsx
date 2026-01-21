@@ -16,7 +16,7 @@ export default function ProfilePageComponent() {
           </div>
           <div>
             <h2 className="text-2xl font-bold">{user?.displayName}</h2>
-            <p className="text-slate-500 text-sm">Nível: Desenvolvedor</p>
+            <p className="text-slate-500 text-sm">Nível: Desenvolvedor Full Stack</p>
           </div>
         </div>
 
