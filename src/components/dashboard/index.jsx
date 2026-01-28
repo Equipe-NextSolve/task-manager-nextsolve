@@ -3,18 +3,17 @@
 import { useEffect, useState } from "react";
 import { LayoutGrid, Users } from "lucide-react";
 import GraficoPizzaTasks from "../GraficoPizzaTasks";
-import CardTask from "@/components/CardTask"; // Importando o Card
-import { getTasks } from "@/services/taskService"; // Usando seu Service para ficar organizado
+import CardTask from "@/components/CardTask"; 
+import { getTasks } from "@/services/taskService";
 
 export default function DashboardHomeComponent() {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Busca as tarefas assim que carrega
   useEffect(() => {
     async function fetchTasks() {
       try {
-        const data = await getTasks(); // Usa a função do seu service
+        const data = await getTasks();
         setTasks(data);
       } catch (error) {
         console.error("Erro ao buscar tarefas:", error);
@@ -25,7 +24,6 @@ export default function DashboardHomeComponent() {
     fetchTasks();
   }, []);
 
-  // Função auxiliar de Estilo (igual a que estava no page.jsx)
   const stylesPrioridade = {
     ALTA: { tagName: "ALTA", tagColor: { bgAndBorderStyles: "bg-red-500/10 border border-red-500/20", textStyles: "text-red-500" }},
     MEDIA: { tagName: "MÉDIA", tagColor: { bgAndBorderStyles: "bg-orange-500/10 border border-orange-500/20", textStyles: "text-orange-500" }},
@@ -58,7 +56,7 @@ export default function DashboardHomeComponent() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
         <StatCard
           title="Total de Projetos"
-          value={tasks.length} // Agora mostra o número real!
+          value={tasks.length}
           icon={<LayoutGrid size={20} />}
           color="text-cyan-400"
         />
@@ -78,7 +76,7 @@ export default function DashboardHomeComponent() {
         </div>
       </div>
 
-      {/* --- AQUI É A PARTE NOVA: LISTA DE TAREFAS (CARDS) --- */}
+      {/* LISTA DE TAREFAS (CARDS) */}
       <div>
         <h2 className="text-xl font-bold text-slate-300 mb-4">Projetos Recentes</h2>
         

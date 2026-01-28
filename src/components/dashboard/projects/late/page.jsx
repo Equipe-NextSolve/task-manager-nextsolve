@@ -73,6 +73,7 @@ export default function AtrasadosPageComponent() {
           tasks.map((tarefa) => (
             <div key={tarefa.id}>
               <CardTask
+              // Tratamento para campos em PT ou EN
                 status={tarefa.status}
                 titulo={tarefa.title || tarefa.titulo || "Sem Título"}
                 descricao={tarefa.description || tarefa.descricao || "Sem descrição"}

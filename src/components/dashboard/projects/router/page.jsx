@@ -9,7 +9,6 @@ export default function ProjectsInProgressComponent() {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Estilos de prioridade
   const stylesPrioridade = {
     ALTA: { tagName: "ALTA", tagColor: { bgAndBorderStyles: "bg-red-500/10 border border-red-500/20", textStyles: "text-red-500" }},
     MEDIA: { tagName: "MÉDIA", tagColor: { bgAndBorderStyles: "bg-orange-500/10 border border-orange-500/20", textStyles: "text-orange-500" }},
@@ -81,6 +80,7 @@ export default function ProjectsInProgressComponent() {
           tasks.map((tarefa) => (
             <div key={tarefa.id}>
               <CardTask
+              // Tratamento para campos em PT ou EN
                 titulo={tarefa.title || tarefa.titulo || "Sem Título"}
                 descricao={tarefa.description || tarefa.descricao || "Sem descrição"}
                 devResponsavel={tarefa.devResponsavel || "Equipe"}
