@@ -30,28 +30,30 @@ export default function NewTaskComponent() {
   };
 
   async function handleSubmit() {
-    setIsLoading(true);
-    console.log("Formdata submitted:", formData);
+    alert("Funcionalidade de criação de tarefa em desenvolvimento.");
+    return;
+    // setIsLoading(true);
+    // console.log("Formdata submitted:", formData);
 
-    try {
-      const docRef = await addDoc(collection(db, "tasks"), formData);
-      console.log("Created Task ID:", docRef.id);
+    // try {
+    //   const docRef = await addDoc(collection(db, "tasks"), formData);
+    //   console.log("Created Task ID:", docRef.id);
 
-      alert("Tarefa criada com sucesso!");
-      setFormData({
-        titulo: "",
-        descricao: "",
-        prazo: "",
-        prioridade: prioridadeTarefas.baixa.tagName,
-        status: statusTasks.aFazer,
-        devResponsavel: "",
-      });
-    } catch (error) {
-      console.error("Erro ao criar tarefa: ", error);
-      alert("Erro ao criar tarefa. Tente novamente.");
-    } finally {
-      setIsLoading(false);
-    }
+    //   alert("Tarefa criada com sucesso!");
+    //   setFormData({
+    //     titulo: "",
+    //     descricao: "",
+    //     prazo: "",
+    //     prioridade: prioridadeTarefas.baixa.tagName,
+    //     status: statusTasks.aFazer,
+    //     devResponsavel: "",
+    //   });
+    // } catch (error) {
+    //   console.error("Erro ao criar tarefa: ", error);
+    //   alert("Erro ao criar tarefa. Tente novamente.");
+    // } finally {
+    //   setIsLoading(false);
+    // }
   }
 
   return (
@@ -70,7 +72,7 @@ export default function NewTaskComponent() {
           <div className="flex flex-col gap-2">
             <label
               htmlFor="titulo"
-              className="flex items-center gap-2 text-sm font-bold text-app-glass-transparent tracking-tighter"
+              className="flex items-center gap-2 text-sm font-bold text-app-details-cyan tracking-tighter"
             >
               <FileText size={14} />
               Título
@@ -90,7 +92,7 @@ export default function NewTaskComponent() {
           <div className="flex flex-col gap-2">
             <label
               htmlFor="descricao"
-              className="flex items-center gap-2 text-sm font-bold text-app-glass-transparent tracking-tighter"
+              className="flex items-center gap-2 text-sm font-bold text-app-details-cyan tracking-tighter"
             >
               <FileText size={14} />
               Descrição
@@ -109,7 +111,7 @@ export default function NewTaskComponent() {
           <div className="flex flex-col gap-2">
             <label
               htmlFor="prazo"
-              className="flex items-center gap-2 text-sm font-bold text-app-glass-transparent tracking-tighter"
+              className="flex items-center gap-2 text-sm font-bold text-app-details-cyan tracking-tighter"
             >
               <Calendar size={14} />
               Prazo
@@ -128,7 +130,7 @@ export default function NewTaskComponent() {
           <div className="flex flex-col gap-2">
             <label
               htmlFor="prioridade"
-              className="flex items-center gap-2 text-sm font-bold text-app-glass-transparent tracking-tighter"
+              className="flex items-center gap-2 text-sm font-bold text-app-details-cyan tracking-tighter"
             >
               <Tag size={14} />
               Prioridade
@@ -151,7 +153,7 @@ export default function NewTaskComponent() {
           <div className="flex flex-col gap-2">
             <label
               htmlFor="status"
-              className="flex items-center gap-2 text-sm font-bold text-app-glass-transparent tracking-tighter"
+              className="flex items-center gap-2 text-sm font-bold text-app-details-cyan tracking-tighter"
             >
               <NotebookText size={14} />
               Status
@@ -174,7 +176,7 @@ export default function NewTaskComponent() {
           <div className="flex flex-col gap-2">
             <label
               htmlFor="devResponsavel"
-              className="flex items-center gap-2 text-sm font-bold text-app-glass-transparent tracking-tighter"
+              className="flex items-center gap-2 text-sm font-bold text-app-details-cyan tracking-tighter"
             >
               <User size={14} />
               Responsável

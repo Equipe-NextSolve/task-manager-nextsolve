@@ -5,12 +5,13 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import { addDoc, collection } from "firebase/firestore";
+// Importação dos ícones de olho
+import { Eye, EyeOff } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { auth } from "../../services/firebaseConfig";
-// Importação dos ícones de olho
-import { Eye, EyeOff } from "lucide-react";
+import { auth, db } from "../../services/firebaseConfig";
 
 export default function LoginComponent() {
   const router = useRouter();
@@ -69,6 +70,13 @@ export default function LoginComponent() {
         formData.email,
         formData.password,
       );
+
+      await addDoc(collection(db, "users"), {
+        name: formData.name,
+        email: formData.email,
+        createdAt: new Date().toISOString(),
+      });
+
       setSuccess("Usuário cadastrado com sucesso!");
       setMode("login");
     } catch (err) {
@@ -216,7 +224,9 @@ export default function LoginComponent() {
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-cyan-400 transition-colors p-1 focus:outline-none"
-                      aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+                      aria-label={
+                        showPassword ? "Ocultar senha" : "Mostrar senha"
+                      }
                     >
                       {showPassword ? (
                         <EyeOff size={20} strokeWidth={2} />
@@ -255,7 +265,7 @@ export default function LoginComponent() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 px-4 bg-cyan-400 hover:bg-cyan-600 text-slate-950 font-bold rounded-lg transition-all duration-300 disabled:opacity-50 mt-4 shadow-lg shadow-cyan-500/10 active:scale-[0.98]"
+                className="w-full py-3 px-4 bg-cyan-400 hover:bg-cyan-600 text-slate-950 font-bold rounded-lg transition-all duration-300 disabled:opacity-50 mt-4 shadow-lg shadow-cyan-500/10 active:scale-[0.98] cursor-pointer"
               >
                 {loading
                   ? "Processando..."
